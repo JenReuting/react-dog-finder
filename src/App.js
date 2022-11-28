@@ -1,34 +1,45 @@
+import React, { useState, useEffect } from "react";
+import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
-import React, { useState } from "react";
-import axios from "axios";
-
-import DogList from "./DogList";
-
+import Nav from "./Nav";
+import Routes from "./Routes";
 
 
 
 function App() {
+  console.log('App');
 
-  let [dogs, setDogs] = useState('[]');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [dogs, setDogs] = useState([]);
 
+  console.log('isLoaded and dogs', isLoaded, dogs);
 
-  axios.get("http://localhost:5001/dogs")
-    .then(resp => {
-      const data = resp.data;
-      console.log("data ---> ", data)
-      setDogs(data)
-      console.log("dogs ----> ", dogs)
-    })
+  async function getDogs() {
+    let response = await axios.get("http://localhost:5001/dogs");
+    setDogs(response.data);
+    setIsLoaded(true);
+  }
 
-  console.log("dogs2 ---->>", dogs)
+  if (!isLoaded) {
+    getDogs();
+  }
+
+  const dogNames = dogs.map(d => d.name);
 
   return (
     <div className="App">
-      <h1>Dogs List {dogs = dogs}</h1>
-      < DogList />
+      <BrowserRouter>
+        <Nav dogNames={dogNames}/>
+        <Routes dogs={dogs}/>
+      </BrowserRouter>
     </div>
-
   );
 }
 
 export default App;
+
+/* <BrowserRouter>
+  <Nav />
+  <Routes />
+</BrowserRouter> */

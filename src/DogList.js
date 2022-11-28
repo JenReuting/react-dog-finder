@@ -6,7 +6,12 @@ import React from "react";
 function DogList({dogs}) {
   return (
     <ul>
-      dogs.map(d => (<li>{dogs.name}</li>))
+      {dogs.map(d => (
+      <li>
+        <h3>{d.name}</h3>
+        <img src={`"../public/${d.src}.jpg"`} alt="dog picture"></img>
+      </li>
+      ))}
     </ul>
   )
 }

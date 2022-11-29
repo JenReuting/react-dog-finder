@@ -7,7 +7,7 @@ function DogList({dogs}) {
   return (
     <ul>
       {dogs.map(d => (
-      <li>
+      <li key={d.key}>
         <h3>{d.name}</h3>
         <img src={`"../public/${d.src}.jpg"`} alt="dog picture"></img>
       </li>

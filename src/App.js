@@ -8,7 +8,18 @@ import RoutesList from "./RoutesList";
 import {v4 as uuid4} from "uuid";
 
 
-
+/**
+ *  Props:
+ *    None
+ *
+ *  State:
+ *    isLoaded - boolean (default: false)
+ *    dogs - array
+ *
+ *  Render:
+ *    App -> (Nav, RoutesList)
+ *
+ */
 function App() {
 
 

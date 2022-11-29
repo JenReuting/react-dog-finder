@@ -1,6 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom"
 
+/**
+ *  Props:
+ *    dogNames - Array of Objects
+ *      Ex: [
+ *        {
+ *          name: `Whiskey`,
+ *          key: (uuid)
+ *        }, ...
+ *      ]
+ *
+ *  States:
+ *    None
+ *
+ *  Render:
+ *    App -> Nav -> Link
+ */
 function Nav({dogNames}) {
 
   return (

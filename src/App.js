@@ -3,21 +3,24 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 import Nav from "./Nav";
-import Routes from "./Routes";
+import RoutesList from "./RoutesList";
+
+import {v4 as uuid4} from "uuid";
 
 
 
 function App() {
-  console.log('App');
+
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [dogs, setDogs] = useState([]);
 
-  console.log('isLoaded and dogs', isLoaded, dogs);
+
 
   async function getDogs() {
     let response = await axios.get("http://localhost:5001/dogs");
-    setDogs(response.data);
+    let dogs = response.data.map(d => ({...d, key: uuid4()}))
+    setDogs(dogs);
     setIsLoaded(true);
   }
 
@@ -25,21 +28,21 @@ function App() {
     getDogs();
   }
 
-  const dogNames = dogs.map(d => d.name);
+  const dogNames = dogs.map(d => ({name: d.name, key: d.key}));
 
   return (
     <div className="App">
       <BrowserRouter>
         <Nav dogNames={dogNames}/>
-        <Routes dogs={dogs}/>
+        <div>
+          {!isLoaded
+            ? <p>Loading....</p>
+            : <RoutesList dogs={dogs}/>
+          }
+        </div>
       </BrowserRouter>
     </div>
   );
+
 }
-
 export default App;
-
-/* <BrowserRouter>
-  <Nav />
-  <Routes />
-</BrowserRouter> */
